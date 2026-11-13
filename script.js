@@ -60,6 +60,7 @@ async function main() {
   const pathwayToDiseases = {};   // pathway title -> Set of diseases
   const pathwayToGenes = {};      // pathway title -> Set of genes
   let geneRows = "";
+  const diseaseSummary = [];
 
   try {
     for (const [disease, genes] of Object.entries(diseases)) {
@@ -72,6 +73,7 @@ async function main() {
         (pathwayToGenes[title] ??= new Set()).add(r.symbol.value);
       }
       const pathwayCount = new Set(rows.map(r => r.title.value)).size;
+            diseaseSummary.push({ disease: disease, count: pathwayCount });
       geneRows += `<tr><td>${disease}</td>
         <td>${genes.map(g => g.symbol).join(", ")}</td>
         <td>${[...found].join(", ") || "none found"}</td>
@@ -92,6 +94,9 @@ async function main() {
 
     document.getElementById("sharedTable").innerHTML =
       `<table><tr><th>Pathway</th><th>Diseases</th><th>Genes involved</th></tr>${sharedRows}</table>`;
+
+    drawBarChart(diseaseSummary);
+    drawHeatmap(shared, Object.keys(diseases), pathwayToGenes);
     status.textContent = "Done.";
   } catch (err) {
     status.textContent = "Error: " + err.message;
@@ -100,3 +105,112 @@ async function main() {
 }
 
 document.getElementById("runBtn").addEventListener("click", main);
+
+function drawBarChart(data) {
+  const margin = { top: 20, right: 30, bottom: 50, left: 280 };
+  const width = 900 - margin.left - margin.right;
+  const height = 300 - margin.top - margin.bottom;
+
+  d3.select("#barChart").selectAll("*").remove();   // clear old chart
+
+  const svg = d3.select("#barChart")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+  // Scales turn data values into pixel positions
+  const x = d3.scaleLinear()
+    .domain([0, d3.max(data, d => d.count) || 1])
+    .range([0, width]);
+  const y = d3.scaleBand()
+    .domain(data.map(d => d.disease))
+    .range([0, height])
+    .padding(0.2);
+
+  // Axes
+  svg.append("g").call(d3.axisLeft(y));
+  svg.append("g")
+    .attr("transform", `translate(0,${height})`)
+    .call(d3.axisBottom(x).ticks(5));
+
+  // One rectangle per disease
+  svg.selectAll("rect")
+    .data(data)
+    .join("rect")
+    .attr("x", 0)
+    .attr("y", d => y(d.disease))
+    .attr("width", d => x(d.count))
+    .attr("height", y.bandwidth())
+    .attr("fill", "#4682b4");
+
+  // Axis label
+  svg.append("text")
+    .attr("x", width / 2)
+    .attr("y", height + 40)
+    .attr("text-anchor", "middle")
+    .text("Number of WikiPathways pathways");
+}
+
+function drawHeatmap(shared, diseaseNames, pathwayToGenes) {
+  // shared = [[pathwayTitle, Set of diseases], ...]; show the top 25
+  const rows = shared.slice(0, 25).map(([title, set]) => ({ title, set }));
+  const cell = 30;
+  const margin = { top: 170, right: 260, bottom: 20, left: 380 };
+  const width = diseaseNames.length * cell;
+  const height = Math.max(rows.length, 1) * cell;
+
+  d3.select("#heatmap").selectAll("*").remove();
+
+  const svg = d3.select("#heatmap")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+  const x = d3.scaleBand().domain(diseaseNames).range([0, width]).padding(0.05);
+  const y = d3.scaleBand().domain(rows.map(r => r.title)).range([0, height]).padding(0.05);
+
+  // Column labels (diseases), rotated
+  svg.selectAll(".col")
+    .data(diseaseNames)
+    .join("text")
+    .attr("transform", d => `translate(${x(d) + x.bandwidth() / 2},-8) rotate(-45)`)
+    .attr("text-anchor", "start")
+    .attr("font-size", 12)
+    .text(d => d);
+
+  // Row labels (pathways), shortened if long
+  svg.selectAll(".row")
+    .data(rows)
+    .join("text")
+    .attr("x", -8)
+    .attr("y", d => y(d.title) + y.bandwidth() / 2)
+    .attr("text-anchor", "end")
+    .attr("dominant-baseline", "middle")
+    .attr("font-size", 12)
+    .text(d => d.title.length > 55 ? d.title.slice(0, 55) + "…" : d.title);
+
+  // Cells: one group per pathway row, one rectangle per disease
+  svg.selectAll(".rowgroup")
+    .data(rows)
+    .join("g")
+    .attr("transform", d => `translate(0,${y(d.title)})`)
+    .selectAll("rect")
+    .data(r => diseaseNames.map(name => ({
+      name: name,
+      title: r.title,
+      on: r.set.has(name)
+    })))
+    .join("rect")
+    .attr("x", d => x(d.name))
+    .attr("width", x.bandwidth())
+    .attr("height", y.bandwidth())
+    .attr("fill", d => d.on ? "#c0392b" : "#eeeeee")
+    .append("title")   // hover tooltip
+    .text(d => d.on
+      ? `${d.name}\n${d.title}\nGenes: ${[...pathwayToGenes[d.title]].join(", ")}`
+      : "");
+}
