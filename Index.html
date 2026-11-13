@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MUSCULAR DYSTROPHIES: GENES AND SHARED PATHWAYS</title>
+  <title>Muscular dystrophies: genes and shared pathways</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Sora:wght@500;600&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
 <body>
   <header>
     <div class="inner">
-      <h1>MUSCULAR DYSTROPHIES: GENES AND SHARED PATHWAYS</h1>
+      <h1>Muscular dystrophies: genes and shared pathways</h1>
       <p>How do different muscular dystrophies compare in their associated
          genes, and which biological processes are shared between them?
          Data: WikiPathways (SPARQL).</p>
@@ -20,6 +20,24 @@
   </header>
 
   <main>
+
+    <section class="intro">
+      <h2>Introduction</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+         eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+         nisi ut aliquip ex ea commodo consequat.</p>
+    </section>
+
+    <section class="howto">
+      <h2>How to use this page</h2>
+      <ol>
+        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+        <li>Sed do eiusmod tempor incididunt ut labore et dolore.</li>
+        <li>Ut enim ad minim veniam, quis nostrud exercitation.</li>
+      </ol>
+    </section>
+
     <div class="controls">
       <button id="runBtn">Load data from WikiPathways</button>
       <span id="status"></span>
@@ -27,24 +45,49 @@
 
     <section>
       <h2>1. Genes per disease and the pathways they appear in</h2>
+      <!-- TEXT 3: how to read this table -->
+      <p class="caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
       <div id="geneTable"></div>
     </section>
 
     <section>
       <h2>2. Pathways shared by 2 or more diseases</h2>
+      <p class="caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
       <div id="sharedTable"></div>
     </section>
 
     <section>
       <h2>3. Pathways per disease</h2>
+      <p class="caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
       <div id="barChart" class="chart"></div>
     </section>
 
     <section>
       <h2>4. Shared pathways heatmap</h2>
+      <p class="caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
       <div id="heatmap" class="chart"></div>
     </section>
+
+    <section>
+      <h2>What the results show</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+         eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </section>
+
+    <section>
+      <h2>Limitations</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+         eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </section>
+
   </main>
+
+  <footer>
+    <div class="inner">
+      <p>Data source: WikiPathways SPARQL endpoint. Lorem ipsum dolor sit amet.</p>
+      <p>PRA3006 Programming in the Life Sciences. Lorem ipsum dolor sit amet.</p>
+    </div>
+  </footer>
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="script.js"></script>

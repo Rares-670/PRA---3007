@@ -75,3 +75,27 @@ tr:nth-child(even) td { background: var(--lavender-light); }
 /* Charts */
 .chart { overflow-x: auto; }
 svg text { font-family: "IBM Plex Sans", Arial, sans-serif; fill: var(--plum-dark); }
+
+/* Extra text styling */
+section p { margin: 0 0 0.8rem; }
+section p:last-child { margin-bottom: 0; }
+
+.caption {
+  color: var(--lavender-mid);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.howto ol { margin: 0; padding-left: 1.4rem; }
+.howto li { margin-bottom: 0.4rem; }
+
+.intro { border-left: 6px solid var(--plum); }
+
+footer {
+  background: var(--plum-dark);
+  color: var(--lavender);
+  padding: 2rem 1.5rem;
+  font-size: 0.9rem;
+}
+footer .inner { max-width: 1100px; margin: 0 auto; }
+footer p { margin: 0 0 0.4rem; }
