@@ -143,7 +143,7 @@ function drawBarChart(data) {
     .attr("y", d => y(d.disease))
     .attr("width", d => x(d.count))
     .attr("height", y.bandwidth())
-    .attr("fill", "#4682b4");
+    .attr("fill", "#5B4B72");
 
   // Axis label
   svg.append("text")
@@ -208,7 +208,7 @@ function drawHeatmap(shared, diseaseNames, pathwayToGenes) {
     .attr("x", d => x(d.name))
     .attr("width", x.bandwidth())
     .attr("height", y.bandwidth())
-    .attr("fill", d => d.on ? "#c0392b" : "#eeeeee")
+    .attr("fill", d => d.on ? "#5B4B72" : "#EFEBF3")
     .append("title")   // hover tooltip
     .text(d => d.on
       ? `${d.name}\n${d.title}\nGenes: ${[...pathwayToGenes[d.title]].join(", ")}`

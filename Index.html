@@ -2,30 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Muscular dystrophies: genes and shared pathways</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MUSCULAR DYSTROPHIES: GENES AND SHARED PATHWAYS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Sora:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Muscular dystrophies: genes and shared pathways</h1>
-  <p>Research question: How do different muscular dystrophies compare in
-     their associated genes, and which biological processes are shared?</p>
+  <header>
+    <div class="inner">
+      <h1>MUSCULAR DYSTROPHIES: GENES AND SHARED PATHWAYS</h1>
+      <p>How do different muscular dystrophies compare in their associated
+         genes, and which biological processes are shared between them?
+         Data: WikiPathways (SPARQL).</p>
+    </div>
+  </header>
 
-  <button id="runBtn">Load data from WikiPathways</button>
-  <p id="status"></p>
+  <main>
+    <div class="controls">
+      <button id="runBtn">Load data from WikiPathways</button>
+      <span id="status"></span>
+    </div>
 
-  <h2>1. Genes per disease and the pathways they appear in</h2>
-  <div id="geneTable"></div>
+    <section>
+      <h2>1. Genes per disease and the pathways they appear in</h2>
+      <div id="geneTable"></div>
+    </section>
 
-  <h2>2. Pathways shared by 2 or more diseases</h2>
-  <div id="sharedTable"></div>
-  <h2>3. Pathways per disease</h2>
-  <div id="barChart"></div>
+    <section>
+      <h2>2. Pathways shared by 2 or more diseases</h2>
+      <div id="sharedTable"></div>
+    </section>
 
-  <h2>4. Shared pathways heatmap</h2>
-  <div id="heatmap"></div>
+    <section>
+      <h2>3. Pathways per disease</h2>
+      <div id="barChart" class="chart"></div>
+    </section>
+
+    <section>
+      <h2>4. Shared pathways heatmap</h2>
+      <div id="heatmap" class="chart"></div>
+    </section>
+  </main>
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="script.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

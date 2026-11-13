@@ -1,5 +1,77 @@
-body { font-family: Arial, sans-serif; max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
-button { padding: 0.6rem 1rem; font-size: 1rem; cursor: pointer; }
-table { border-collapse: collapse; width: 100%; margin-bottom: 2rem; }
-th, td { border: 1px solid #ccc; padding: 6px 10px; text-align: left; }
-th { background: #f0f0f0; }
+:root {
+  --lavender:       #BEB2C8;  /* your base colour */
+  --lavender-light: #EFEBF3;  /* page background, table stripes */
+  --lavender-mid:   #8F7FA3;  /* secondary accents */
+  --plum:           #5B4B72;  /* headings, buttons, chart fills */
+  --plum-dark:      #2E2540;  /* text, header */
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "IBM Plex Sans", Arial, sans-serif;
+  color: var(--plum-dark);
+  background: var(--lavender-light);
+  line-height: 1.6;
+}
+
+h1, h2 { font-family: "Sora", "IBM Plex Sans", Arial, sans-serif; }
+
+/* Header band */
+header {
+  background: linear-gradient(135deg, var(--plum-dark), var(--plum));
+  color: #fff;
+  padding: 3rem 1.5rem;
+  border-bottom: 6px solid var(--lavender);
+}
+header .inner, main { max-width: 1100px; margin: 0 auto; }
+header h1 { margin: 0 0 0.6rem; font-size: 2rem; font-weight: 600; letter-spacing: -0.01em; }
+header p  { margin: 0; max-width: 70ch; color: var(--lavender); }
+
+main { padding: 2rem 1.5rem 4rem; }
+
+/* Button + status */
+.controls { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+button {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  background: var(--plum);
+  border: none;
+  border-radius: 6px;
+  padding: 0.7rem 1.3rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+button:hover { background: var(--plum-dark); }
+#status { color: var(--lavender-mid); font-weight: 500; }
+
+/* Section cards */
+section {
+  background: #fff;
+  border: 1px solid var(--lavender);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(46, 37, 64, 0.08);
+}
+section h2 {
+  margin: 0 0 1rem;
+  padding-bottom: 0.6rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--plum);
+  border-bottom: 2px solid var(--lavender-light);
+}
+
+/* Tables */
+table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--lavender-light); }
+th { background: var(--plum); color: #fff; font-weight: 500; }
+tr:nth-child(even) td { background: var(--lavender-light); }
+
+/* Charts */
+.chart { overflow-x: auto; }
+svg text { font-family: "IBM Plex Sans", Arial, sans-serif; fill: var(--plum-dark); }
